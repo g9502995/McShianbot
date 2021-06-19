@@ -1,2 +1,2 @@
-# mcshianbot
+# McShianbot
  minecraft
