@@ -1,0 +1,11 @@
+{
+  "ip": "kr.mcfallout.net",
+  "port": "25565",
+  "username": "",
+  "password": "",
+  "auth": "mojang",
+  "whitelist": [ "jssd0808" ],
+  "timecold" : "900000",
+  "AutoEat" : "true"
+  
+}
