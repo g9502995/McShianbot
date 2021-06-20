@@ -1,0 +1,12 @@
+{
+  "ip": "kr.mcfallout.net",
+  "port": "25565",
+  "username": "",
+  "password": "",
+  "auth": "mojang",
+  "whitelist": ["jssd0808"],
+  "messages": "/m jssd0808 試營運！菜鳥抽獎機 1注10000 中獎25000 機率約33.33%(三分之一)",
+  "AutoEat" : "true",
+  "AutoMessage" : "true"
+  
+}
