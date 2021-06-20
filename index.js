@@ -2,8 +2,9 @@
 const Discord = require("discord.js");
 const windowsg = require('prismarine-windows')('1.16.4');
 const Item = require('prismarine-item')('1.16.4');
-const config = require(`./config.json`);
-const auth = require(`./auth.json`);
+const config = require(`${process.cwd()}/config.json`);
+const auth = require(`${process.cwd()}/auth.json`);
+const dcconfig = require(`${process.cwd()}/discordconfig.json`);
 const mineflayer = require("mineflayer");
 const autoeat = require("mineflayer-auto-eat");
 const { pathfinder, Movements, goals: { GoalNear } } = require('mineflayer-pathfinder');
@@ -12,11 +13,6 @@ const inv = windowsg.createWindow(1, 'minecraft:inventory', 'inv', 36);
 const client = new Discord.Client();
 const sd = require('silly-datetime');
 const fs = require("fs");
-let gginin=true;
-let prefix = ".";
-
-var functionIsRunning = false;
-
 
 
 let loginOpts = {  //登入資訊
@@ -63,19 +59,16 @@ function relog() {
 
 
 
-
-  
-
-  
-
-
-
 client.login(auth["discord-auth"]);
 
-client.on("ready", async =>{
-    let channel = client.channels.cache.get("855265085517332497")
+client.on("ready", async () =>{
+   
+         
+        
+
     console.log("Bot已正常上線")
-    channel.send("Bot已正常上線")
+    
+   
 
     /*timename=setInterval(hello,10000)
     function hello(){ 
@@ -85,14 +78,19 @@ client.on("ready", async =>{
 })
 
 
+  
 
-client.on('message', msg => {
-    
-    let userg = "379186348210520064"
-    let userh = "379186888570830850"
+
+
+client.on('message', async(msg) => {
+
+    let userg = dcconfig.user1
+    let userh = dcconfig.user2
     if (msg.author.id !== userg && msg.author.id !== userh) return;
     //前置判斷
+    
     try {
+
         if (!msg.guild || !msg.member) return; //訊息內不存在guild元素 = 非群組消息(私聊)
         if (!msg.member.user) return; //幫bot值多拉一層，判斷上層物件是否存在
         if (msg.member.user.bot) return; //訊息內bot值為正 = 此消息為bot發送
@@ -102,8 +100,11 @@ client.on('message', msg => {
 
     //字串分析
     try {
+        const channel = await client.channels.fetch(dcconfig.channel);
+
+
         const prefix = '!' //前綴符號定義
-        let channel = client.channels.cache.get("855265085517332497")
+        
         if (msg.content.substring(0, prefix.length) === prefix) //如果訊息的開頭~前綴字長度的訊息 = 前綴字
         {
             const cmd = msg.content.substring(prefix.length).split(' '); //以空白分割前綴以後的字串
@@ -117,15 +118,15 @@ client.on('message', msg => {
                     break;
                     
                 case '關機':
-                    
-                    channel.send('我已關閉');
+                 
                     process.exit();
                     break;
                     
                     
                 case '重開':
+                    channel.send('test');
                     bot.end();
-                  
+
                     break;
             }
         }
@@ -202,13 +203,13 @@ const whitelist = (config.whitelist)  //定義白名單
                 
             ];
 
-bot.on('chat', (username, message) => {
+bot.on('chat', async(username, message) => {
     if (username==='jssd0808') {
     
-    let channel = client.channels.cache.get("855265085517332497")
+ const channel = await client.channels.cache.find(x => x.id == dcconfig.channel)
     
     if(!channel) return;
-    channel.send(`${username}:${message}`)
+    //channel.send(`${username}:${message}`)
     }
 
     
