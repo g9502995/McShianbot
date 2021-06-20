@@ -1,6 +1,6 @@
 const windowsg = require('prismarine-windows')('1.16.4');
 const Item = require('prismarine-item')('1.16.4');
-const config = require(`${process.cwd()}/configs.json`);
+const config = require(`${process.cwd()}/config.json`);
 const mineflayer = require("mineflayer");
 const autoeat = require("mineflayer-auto-eat");
 const { pathfinder, Movements, goals: { GoalNear } } = require('mineflayer-pathfinder');
