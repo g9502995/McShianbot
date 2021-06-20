@@ -1,6 +1,4 @@
-<<<<<<< HEAD
-# mcshianbot
- minecraft
+
 =======
 # McShianbot
 一個目前自用的廢土小機器人
@@ -31,4 +29,4 @@
 
 陸續新增。
 
->>>>>>> 54a053dc42564616cc4d081f24add7086effa943
+
