@@ -10,12 +10,12 @@ module.exports = async (bot, autoeat) => {
    
 
     bot.on("autoeat_started", () => {
-        console.log("開始自動飲食!")
+        console.log("【MCSngBot】 開始自動飲食!")
     })
   
 
     bot.on("autoeat_stopped", () => {
-        console.log("停止自動飲食!")
+        console.log("【MCSngBot】 停止自動飲食!")
     })
 
     bot.on("health", () => {
