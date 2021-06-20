@@ -1,20 +1,15 @@
-
-const Discord = require("discord.js");
 const windowsg = require('prismarine-windows')('1.16.4');
 const Item = require('prismarine-item')('1.16.4');
 const config = require(`${process.cwd()}/config.json`);
-const auth = require(`${process.cwd()}/auth.json`);
-const dcconfig = require(`${process.cwd()}/discordconfig.json`);
 const mineflayer = require("mineflayer");
 const autoeat = require("mineflayer-auto-eat");
 const { pathfinder, Movements, goals: { GoalNear } } = require('mineflayer-pathfinder');
 const RANGE_GOAL = 1 // get within this radius of the player
 const inv = windowsg.createWindow(1, 'minecraft:inventory', 'inv', 36);
-const client = new Discord.Client();
 const sd = require('silly-datetime');
 const fs = require("fs");
 
-
+let time1 = sd.format(new Date(), 'YYYY-MM-DD HH-mm-ss');
 let loginOpts = {  //登入資訊
     host: config.ip,  //伺服器ip
     port: config.port,  //伺服器port(預設25565)
@@ -23,122 +18,18 @@ let loginOpts = {  //登入資訊
     version: false,  //bot的Minecraft版本
     auth: config.auth //登入驗證器使用mojang或者microsoft
 }
-
-//使用驗證緩存
-function connects() {
-    const bot = mineflayer.createBot(loginOpts) //定義bot為mineflayer類別中的createBot
-   
-    
-
-
-/*bindEvents(bot);
-
-function bindEvents(bot) {
-
-    bot.on('error', function(err) {
-        console.log('Error attempting to reconnect: ' + err.errno + '.');
-        if (err.code == undefined) {
-            console.log('Invalid credentials OR bot needs to wait because it relogged too quickly.');
-            console.log('Will retry to connect in 30 seconds. ');
-            setTimeout(relog, 30000);
-        }
-    });
-
-    bot.on('end', function() {
-        console.log("Bot has ended");
-        // If set less than 30s you will get an invalid credentials error, which we handle above.
-        setTimeout(relog, 30000);  
-    });
-}
-
-function relog() {
-    console.log("Attempting to reconnect...");
-    bot = mineflayer.createBot(options);
-    bindEvents(bot);
-}*/
-
-
-
-client.login(auth["discord-auth"]);
-
-client.on("ready", async () =>{
-   
-         
-        
-
-    console.log("Bot已正常上線")
-    
-   
-
-    /*timename=setInterval(hello,10000)
-    function hello(){ 
-    bot.chat("&4/warp jssd0808試營運！菜鳥抽獎機，1注10000，中獎23000，機率約33.33%(三分之一)"); 
-    }*/
-    
-})
+var myDate = new Date();
+var firsttime = myDate.getTime();
 
 
   
 
 
-
-client.on('message', async(msg) => {
-
-    let userg = dcconfig.user1
-    let userh = dcconfig.user2
-    if (msg.author.id !== userg && msg.author.id !== userh) return;
-    //前置判斷
-    
-    try {
-
-        if (!msg.guild || !msg.member) return; //訊息內不存在guild元素 = 非群組消息(私聊)
-        if (!msg.member.user) return; //幫bot值多拉一層，判斷上層物件是否存在
-        if (msg.member.user.bot) return; //訊息內bot值為正 = 此消息為bot發送
-    } catch (err) {
-        return;
-    }
-
-    //字串分析
-    try {
-        const channel = await client.channels.fetch(dcconfig.channel);
-
-
-        const prefix = '!' //前綴符號定義
-        
-        if (msg.content.substring(0, prefix.length) === prefix) //如果訊息的開頭~前綴字長度的訊息 = 前綴字
-        {
-            const cmd = msg.content.substring(prefix.length).split(' '); //以空白分割前綴以後的字串
-
-            //功能實作
-            
-            switch (cmd[0]) {
-                case '開機':
-                    inject();
-                    
-                    break;
-                    
-                case '關機':
-                 
-                    process.exit();
-                    break;
-                    
-                    
-                case '重開':
-                    channel.send('test');
-                    bot.end();
-
-                    break;
-            }
-        }
-    } catch (err) {
-        console.log('OnMessageError', err);
-    }
-}
-);
-
-
-
-
+//使用驗證緩存
+function connects() {
+    const bot = mineflayer.createBot(loginOpts) //定義bot為mineflayer類別中的createBot
+   
+     console.log(`目前時間:${time1} BOT已上線 開始計時`)
 
 
 
@@ -189,6 +80,8 @@ const whitelist = (config.whitelist)  //定義白名單
                                     } 
                                 }, 10000)
                                 break
+                            case "start":
+
                                  
                             }
                         }else{
@@ -203,17 +96,7 @@ const whitelist = (config.whitelist)  //定義白名單
                 
             ];
 
-bot.on('chat', async(username, message) => {
-    if (username==='jssd0808') {
-    
- const channel = await client.channels.cache.find(x => x.id == dcconfig.channel)
-    
-    if(!channel) return;
-    //channel.send(`${username}:${message}`)
-    }
 
-    
-})
     
 bot.once('spawn', function () { //一直看你看到發寒
     if (config.AutoEat) { //如果自動飲食設定為True時，則執行(預設為True)
@@ -246,10 +129,6 @@ bot.once('spawn', function () { //一直看你看到發寒
 
   })
 
-  
-
-
- 
 
 inv.updateSlot(10, new Item(256, 1))
 bot.loadPlugin(pathfinder)
@@ -264,21 +143,40 @@ bot.once('spawn', () => {
     bot.chat(`/m Hiccup543  草擬媽我沒食物了拉`)
   }
 }, 120000);
-console.log(inv.items("baked_potato"))
+if(config.AutoMessage){
+setInterval(() => {
+    let dt = new Date();
+    let m = dt.getMinutes();
+   let p = m/10
+   
+    // minutes remaining until next 10 minute mark
+   if(p === 1.1||p ===2.1||p ===3.1||p ===4.3||p ===5.1||p ===0.1){
+    setTimeout(function(){
+        bot.chat(config.messages)
+    },31000);
+    
+   }
+   
+    
+}, 15000);
+}
 
   
-    var interval = setInterval(function(){
-        bot.chat("$/warp jssd0808 試營運！菜鳥抽獎機，1注10000，中獎23000，機率約33.33%(三分之一)");
-        
-        
-    }, config.timecold)
+
+  
+    
+    
   const mcData = require('minecraft-data')(bot.version)
   const defaultMove = new Movements(bot, mcData)
 
   bot.on('chat', (username, message) => {
+      
     if (username === bot.username) return
     if (message === '名字'){
         bot.chat(`我叫做智鈞 汪汪 `)
+    }
+    if (message === '時間'){
+        bot.chat(`${countdown()}`)
     }
     if (message !== '過來') return
     const target = bot.players[username]?.entity
@@ -298,7 +196,7 @@ console.log(inv.items("baked_potato"))
 
 
   bot.once('end', () => {
-    let time1 = sd.format(new Date(), 'YYYY-MM-DD HH-mm-ss'); //獲得系統時間
+    
     console.log(`[資訊] 客戶端與伺服器斷線 ，5秒後將會自動重新連線...\n@${time1}`)
     setTimeout(function () {
         connects();
