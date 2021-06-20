@@ -22,12 +22,8 @@ var myDate = new Date();
 var firsttime = myDate.getTime();
 
 
-  
-
-
-//使用驗證緩存
 function connects() {
-    const bot = mineflayer.createBot(loginOpts) //定義bot為mineflayer類別中的createBot
+    const bot = mineflayer.createBot(loginOpts) 
    
      console.log(`目前時間:${time1} BOT已上線 開始計時`)
 
@@ -89,13 +85,6 @@ const whitelist = (config.whitelist)  //定義白名單
                         }
                     }
             })
-
-            var itemss = [   //不要被丟棄的物品
-                'baked_potato',
-                '868'
-                
-            ];
-
 
     
 bot.once('spawn', function () { //一直看你看到發寒
