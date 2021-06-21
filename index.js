@@ -1,4 +1,5 @@
 const windowsg = require('prismarine-windows')('1.16.4');
+const linebot = require('linebot');
 const Item = require('prismarine-item')('1.16.4');
 const config = require(`${process.cwd()}/config.json`);
 const mineflayer = require("mineflayer");
@@ -20,6 +21,7 @@ let loginOpts = {  //登入資訊
 }
 var myDate = new Date();
 var firsttime = myDate.getTime();
+
 
 
 function connects() {
@@ -76,7 +78,8 @@ const whitelist = (config.whitelist)  //定義白名單
                                     } 
                                 }, 10000)
                                 break
-                            case "start":
+                            case "farm":
+							require(`${process.cwd()}/commands/discord.js`)(linebot,bot);
 
                                  
                             }
